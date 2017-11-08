@@ -3,7 +3,7 @@ $(function(){
 	console.log("Page Loaded");
 })
 
-var searchArray = ['Depressed','Sad','Worried','Down','Pesimmist','Hopeless'];
+var searchArray = ['Basketball','Baseball','Tennis','Soccer','Golf','Rugby'];
 
 function populateButtons(searchArray,classToAdd,areaToAddTo){
 	$(areaToAddTo).empty();
