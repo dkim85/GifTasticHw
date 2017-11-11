@@ -6,6 +6,7 @@ $(function(){
 var searchArray = ['Basketball','Baseball','Tennis','Soccer','Golf','Rugby'];
 
 function populateButtons(searchArray,classToAdd,areaToAddTo){
+	console.log(areaToAddTo);
 	$(areaToAddTo).empty();
 	for(var i=0;i<searchArray.length;i++){
 		var a = $('<button>');
@@ -17,8 +18,9 @@ function populateButtons(searchArray,classToAdd,areaToAddTo){
 }
 
 $(document).on('click','.searchButton',function(){
+	$('#searches').empty();
 	var type = $(this).data('type');
-	//console.log(type);
+	console.log(type);
 	var queryURL = 'http://api.giphy.com/v1/gifs/search?q='+type+'&api_key=xhQVH4Kgh43IC7cHrfMbQGebOIkRRjQL&limit=10';
 	$.ajax({
 		url:queryURL,
@@ -39,7 +41,26 @@ $(document).on('click','.searchButton',function(){
 			image.addClass('searchImage');
 			searchDiv.append(p);
 			searchDiv.append(image);
-			$('#seacrhes').append(searchDiv);
+			$('#searches').append(searchDiv);
 		}
 	})
 })
+
+$(document).on('click','.searchImage',function(){
+	var state = $(this).attr('data-state');
+	if(state == 'still'){
+		$(this).attr('src',$(this).data('animated'));
+		$(this).attr('data-state','animated');
+	} else {
+		$(this).attr('src',$(this).data('still'));
+		$(this).attr('data-state','still');
+	}
+})
+
+$('#add-field').on('click', function(event){
+	event.preventDefault();
+	var classToAdd = $('#search-input').val().trim();
+	searchArray.push(classToAdd);
+	populateButtons(searchArray, 'searchButton', '#buttonsArea');
+})
+
